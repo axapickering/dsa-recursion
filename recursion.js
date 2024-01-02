@@ -3,6 +3,7 @@
 function product(nums) {
   if (nums.length === 0) return 1;
 
+  // inefficient refactor
   return nums[0] * product(nums.splice(1));
 }
 
@@ -19,19 +20,39 @@ function longest(words) {
 /** everyOther: return a string with every other letter. */
 
 function everyOther(str) {
+  let out = [];
 
+  function _everyOther(str, i) {
+    if (str.length === i) return;
+
+    if (i % 2 === 0) out.push(str[i]);
+
+    _everyOther(str, i + 1);
+  }
+
+  _everyOther(str, 0);
+
+  return out.join('');
 }
 
 /** find: return boolean depending on if val exists in array or not. */
 
 function find(arr, val) {
+  if (arr.length === 0) {
+    console.log('INSIDE IF VAL=', val)
+    return false;
+  }
 
+  return (arr.pop() === val || find(arr, val));
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not. */
 
-function isPalindrome(str) {
+function isPalindrome(str, i=0) {
+  // odd length only?
+  if (i === Math.ceil(str.length / 2)) return true;
 
+  return str[i] === str[str.length - 1 - i] && isPalindrome(str, i + 1);
 }
 
 /** revString: return a copy of a string, but in reverse. */
