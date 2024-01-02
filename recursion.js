@@ -1,12 +1,18 @@
 /** product: calculate the product of an array of numbers. */
 
 function product(nums) {
+  if (nums.length === 0) return 1;
 
+  return nums[0] * product(nums.splice(1));
 }
 
 /** longest: return the length of the longest word in an array of words. */
 
 function longest(words) {
+  while (words.length > 0) {
+    return Math.max(words[0].length,longest(words.splice(1)))
+  }
+  return 0;
 
 }
 
