@@ -11,7 +11,7 @@ function product(nums) {
 
 function longest(words) {
   while (words.length > 0) {
-    return Math.max(words[0].length,longest(words.splice(1)))
+    return Math.max(words[0].length, longest(words.splice(1)));
   }
   return 0;
 
@@ -38,17 +38,19 @@ function everyOther(str) {
 /** find: return boolean depending on if val exists in array or not. */
 
 function find(arr, val) {
-  if (arr.length === 0) {
-    console.log('INSIDE IF VAL=', val)
+  if (arr.length <= 0) {
     return false;
   }
+
+  console.log('ARR=', arr);
+  console.log('VAL=', val);
 
   return (arr.pop() === val || find(arr, val));
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not. */
 
-function isPalindrome(str, i=0) {
+function isPalindrome(str, i = 0) {
   // odd length only?
   if (i === Math.ceil(str.length / 2)) return true;
 
@@ -58,30 +60,59 @@ function isPalindrome(str, i=0) {
 /** revString: return a copy of a string, but in reverse. */
 
 function revString(str) {
-    let out = [];
+  let out = [];
 
-    function _revString(i) {
+  function _revString(i) {
 
-      if (i < 0) return;
-      out.push(str[i]);
-      _revString(i-1);
+    if (i < 0) return;
+    out.push(str[i]);
+    _revString(i - 1);
 
-    }
+  }
 
-    _revString(str.length-1);
-    return out.join("");
+  _revString(str.length - 1);
+  return out.join("");
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
 function findIndex(arr, val) {
+  if (arr.length === 0) return -1;
+
+  if (arr.pop() === val) return arr.length;
+
+  findIndex(arr, val)
 
 }
 
 /** gatherStrings: given an object, return an array of all of the string values. */
 
 function gatherStrings(obj) {
+  let out = [];
+  let values = Object.values(obj);
 
+  function _gatherStrings(innerVals) {
+    if (innerVals.length === 0) return;
+
+    let lastVal = innerVals.pop();
+
+    // also handles arrays lol
+    if (Array.isArray(lastVal)) {
+      _gatherStrings(lastVal);
+    }
+    else if (typeof lastVal === 'object') {
+      out.push(...gatherStrings(lastVal));
+    }
+    else if (typeof lastVal === 'string') {
+      out.push(lastVal);
+    }
+
+    _gatherStrings(innerVals);
+  }
+
+  _gatherStrings(values);
+
+  return out;
 }
 
 // FURTHER STUDY
